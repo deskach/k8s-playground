@@ -3,7 +3,7 @@ import {CustomError} from "./custom-error";
 export class NotFoundError extends CustomError {
     constructor(
         public message = 'Not found',
-        public statusCode = 405
+        public statusCode = 404
     ) {
         super(message);
 

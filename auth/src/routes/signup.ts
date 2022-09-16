@@ -4,6 +4,7 @@ import {RequestValidationError} from "../errors/request-validation-error";
 import {User} from "../models/user";
 import {isEmpty} from "../util";
 import {CustomError} from "../errors/custom-error";
+import {BadRequestError} from "../errors/bad-request-errot";
 
 const router = express.Router();
 
@@ -36,7 +37,7 @@ const createNewUser = async (req: Request) => {
     if (!isEmpty(existingUser)) {
         console.log('Email in use')
         // throw new CustomError('Email in use', 409);
-        throw new CustomError('Email in use', 409);
+        throw new BadRequestError('Email in use');
     }
 
     const user = await User.build({email, password});

@@ -5,15 +5,9 @@ export class NotFoundError extends CustomError {
         public message = 'Not found',
         public statusCode = 404
     ) {
-        super(message);
+        super(message, statusCode);
 
         // Only because we are extending a built-in class
         Object.setPrototypeOf(this, NotFoundError.prototype);
-    }
-
-    public serializeErrors() {
-        return [
-            {message: this.message}
-        ]
     }
 }

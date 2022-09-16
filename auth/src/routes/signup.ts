@@ -1,8 +1,9 @@
 import express, {Request, Response} from "express";
 import {body, validationResult} from "express-validator";
 import {RequestValidationError} from "../errors/request-validation-error";
-// import {NotFoundError} from "../errors/not-found-error";
-// import {DatabaseConnectionError} from "../errors/database-connection-error";
+import {User} from "../models/user";
+import {isEmpty} from "../util";
+import {CustomError} from "../errors/custom-error";
 
 const router = express.Router();
 
@@ -21,13 +22,27 @@ router.post("/api/users/signup",
             throw new RequestValidationError(errors.array());
         }
 
-        // const {email, password} = req.body;
+        const user = await createNewUser(req)
 
-        console.log("Creating a user...");
-        // throw new NotFoundError("User not found");
-
-        res.send("signup");
+        return res.status(201).send(user);
     }
 )
+
+const createNewUser = async (req: Request) => {
+    const {email, password} = req.body;
+
+    const existingUser = await User.findOne({email});
+
+    if (!isEmpty(existingUser)) {
+        console.log('Email in use')
+        // throw new CustomError('Email in use', 409);
+        throw new CustomError('Email in use', 409);
+    }
+
+    const user = await User.build({email, password});
+    await user.save();
+
+    return user;
+}
 
 export {router as signUpRouter};

@@ -1,16 +1,18 @@
-interface ErrorInstance {
-    message: string;
-    field?: string;
-}
+import {CustomErrorBase} from "./custom-error-base";
 
-export abstract class CustomError extends Error {
-    abstract statusCode: number;
-
-    protected constructor(message: string) {
+export class CustomError extends CustomErrorBase {
+    constructor(
+        public message = 'Something went wrong',
+        public statusCode = 500
+    ) {
         super(message);
 
         Object.setPrototypeOf(this, CustomError.prototype);
     }
 
-    public abstract serializeErrors(): ErrorInstance[];
+    public serializeErrors() {
+        return [
+            {message: this.message}
+        ]
+    }
 }

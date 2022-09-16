@@ -5,15 +5,9 @@ export class DatabaseConnectionError extends CustomError {
         private reason = 'Error connecting to the database',
         public statusCode = 500
     ) {
-        super(reason);
+        super(reason, statusCode);
 
         // Only because we are extending a built-in class
         Object.setPrototypeOf(this, DatabaseConnectionError.prototype);
-    }
-
-    public serializeErrors() {
-        return [
-            {message: this.reason}
-        ]
     }
 }

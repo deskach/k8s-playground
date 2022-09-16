@@ -1,6 +1,7 @@
 import express, {Request, Response} from "express";
 import {body, validationResult} from "express-validator";
 import {RequestValidationError} from "../errors/request-validation-error";
+// import {NotFoundError} from "../errors/not-found-error";
 // import {DatabaseConnectionError} from "../errors/database-connection-error";
 
 const router = express.Router();
@@ -23,7 +24,7 @@ router.post("/api/users/signup",
         // const {email, password} = req.body;
 
         console.log("Creating a user...");
-        // throw new DatabaseConnectionError();
+        // throw new NotFoundError("User not found");
 
         res.send("signup");
     }

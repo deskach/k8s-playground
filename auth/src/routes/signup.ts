@@ -3,7 +3,6 @@ import {body, validationResult} from "express-validator";
 import {RequestValidationError} from "../errors/request-validation-error";
 import {User} from "../models/user";
 import {isEmpty} from "../util";
-import {CustomError} from "../errors/custom-error";
 import {BadRequestError} from "../errors/bad-request-errot";
 
 const router = express.Router();

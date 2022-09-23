@@ -1,10 +1,7 @@
 import express, {Request, Response} from "express";
-import {body, validationResult} from "express-validator";
-import jwt from 'jsonwebtoken';
-import {RequestValidationError} from "../errors/request-validation-error";
-import {User} from "../models/user";
-import {isEmpty} from "../util";
-import {BadRequestError} from "../errors/bad-request-errot";
+import {body} from "express-validator";
+import {createNewUser} from "../helpers/user-helper";
+import {checkValidationErrors} from "../helpers/validation-helper";
 
 const router = express.Router();
 
@@ -17,39 +14,12 @@ router.post("/api/users/signup",
             .withMessage('Password must be from 4 to 20 chars'),
     ], // ^ array of middlewares
     async (req: Request, res: Response) => {
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            throw new RequestValidationError(errors.array());
-        }
+        checkValidationErrors(req);
 
         const user = await createNewUser(req)
-        const userJWT = jwt.sign({
-            id: user.id,
-            email: user.email
-        }, 'asdf');
-
-        req.session = {jwt: userJWT};
 
         return res.status(201).send(user);
     }
 )
-
-const createNewUser = async (req: Request) => {
-    const {email, password} = req.body;
-
-    const existingUser = await User.findOne({email});
-
-    if (!isEmpty(existingUser)) {
-        console.log('Email in use')
-        // throw new CustomError('Email in use', 409);
-        throw new BadRequestError('Email in use');
-    }
-
-    const user = await User.build({email, password});
-    await user.save();
-
-    return user;
-}
 
 export {router as signUpRouter};

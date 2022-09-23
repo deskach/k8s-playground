@@ -1,13 +1,15 @@
 import {Schema, model, HydratedDocument, Model, Document} from "mongoose";
-import {PasswordService} from "../services/password";
+import {PasswordService} from "../helpers/password-helper";
 
 interface UserAttrs {
     email: string;
     password: string;
 }
 
+export type UserDoc = HydratedDocument<UserAttrs>;
+
 interface UserModel extends Model<UserAttrs> {
-    build(attrs: UserAttrs): Promise<HydratedDocument<UserAttrs>>;
+    build(attrs: UserAttrs): Promise<UserDoc>;
 }
 
 const userSchema = new Schema<UserAttrs, UserModel>({

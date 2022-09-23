@@ -10,7 +10,8 @@ import {errorHandler} from "./middlewares/error-handler";
 import {NotFoundError} from "./errors/not-found-error";
 import * as mongoose from "mongoose";
 import {DatabaseConnectionError} from "./errors/database-connection-error";
-import {noop} from "./util";
+import {isEmpty, noop} from "./util";
+import {CustomError} from "./errors/custom-error";
 
 const PORT = 3000;
 const app = express();
@@ -27,8 +28,16 @@ app.all('*', async () => {
 });
 app.use(errorHandler);
 
+const checkEnv = () => {
+    if (isEmpty(process.env.JWT_KEY)) {
+        throw new CustomError("JWT_KEY env var must be defined");
+    }
+}
+
 const start = async () => {
     const connStr = "mongodb://auth-mongo-srv:27017/auth";
+
+    checkEnv();
 
     try {
         await mongoose.connect(connStr);

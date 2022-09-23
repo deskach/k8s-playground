@@ -1,6 +1,7 @@
 import express from 'express';
 import 'express-async-errors';
 import {json} from 'body-parser';
+import cookieSession from 'cookie-session';
 import {currentUserRouter} from './routes/currentUser';
 import {signInRouter} from "./routes/signIn";
 import {signOutRouter} from "./routes/signout";
@@ -19,6 +20,7 @@ app.use(currentUserRouter);
 app.use(signInRouter);
 app.use(signOutRouter);
 app.use(signUpRouter);
+app.use(cookieSession({name: 'session', keys: ['jwt']}))
 
 app.all('*', async () => {
     throw new NotFoundError("url not found")

@@ -29,8 +29,10 @@ app.all('*', async () => {
 app.use(errorHandler);
 
 const checkEnv = () => {
-    if (isEmpty(process.env.JWT_KEY)) {
-        throw new CustomError("JWT_KEY env var must be defined");
+    const {JWT_KEY} = process.env
+
+    if (!JWT_KEY) {
+        throw new CustomError(`JWT_KEY env var ${JWT_KEY} is invalid`);
     }
 }
 

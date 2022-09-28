@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 import {body} from "express-validator";
 import {createNewUser} from "../helpers/user-helper";
-import {checkValidationErrors} from "../helpers/validation-helper";
+import {validateRequest} from "../middlewares/validate-request";
 
 const router = express.Router();
 
@@ -12,10 +12,9 @@ router.post("/api/users/signup",
             .trim()
             .isLength({min: 4, max: 20})
             .withMessage('Password must be from 4 to 20 chars'),
-    ], // ^ array of middlewares
+    ],
+    validateRequest,
     async (req: Request, res: Response) => {
-        checkValidationErrors(req);
-
         const user = await createNewUser(req)
 
         return res.status(201).send(user);

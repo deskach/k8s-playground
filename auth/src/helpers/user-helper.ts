@@ -13,10 +13,11 @@ const addJWT2Req = (req: Request, user: UserDoc) => {
     req.session = {jwt: userJWT};
 }
 
+export const findUser = async (email: string) => User.findOne({email});
+
 export const createNewUser = async (req: Request) => {
     const {email, password} = req.body;
-
-    const existingUser = await User.findOne({email});
+    const existingUser = await findUser(email);
 
     if (!isEmpty(existingUser)) {
         const msg = `Email "${email}" is in use`;

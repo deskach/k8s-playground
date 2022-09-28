@@ -37,14 +37,13 @@ const checkEnv = () => {
 const start = async () => {
     const connStr = "mongodb://auth-mongo-srv:27017/auth";
 
-    checkEnv();
-
     try {
+        checkEnv();
         await mongoose.connect(connStr);
         console.log(`Connected to ${connStr}`);
-    } catch (err) {
-        console.log("Failed connecting to ", connStr);
-        throw new DatabaseConnectionError((err as Error).message);
+    } catch (err: any) {
+        console.error(err.message);
+        throw err;
     }
 
     app.listen(PORT, () => console.log(`Listening on ${PORT}`));

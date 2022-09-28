@@ -19,9 +19,9 @@ export const createNewUser = async (req: Request) => {
     const existingUser = await User.findOne({email});
 
     if (!isEmpty(existingUser)) {
-        console.log('Email in use')
-        // throw new CustomError('Email in use', 409);
-        throw new BadRequestError('Email in use');
+        const msg = `Email "${email}" is in use`;
+        console.error(msg);
+        throw new BadRequestError(msg);
     }
 
     const user = await User.build({email, password});

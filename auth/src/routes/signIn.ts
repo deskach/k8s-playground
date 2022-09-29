@@ -25,7 +25,7 @@ router.get("/api/users/signin",
 
         if (isEmpty(user)) {
             throw new BadRequestError(`Email ${email} not found`)
-        } else if (!await PasswordHelper.compare(user?.get('password'), suppliedPassword)) {
+        } else if (!await PasswordHelper.compare(user?.password ?? '', suppliedPassword)) {
             throw new BadRequestError('Invalid password')
         }
 

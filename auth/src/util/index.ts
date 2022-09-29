@@ -9,5 +9,5 @@ export const isEmpty = (obj: any): boolean => {
         return obj.length == 0;
     }
 
-    return !!obj;
+    return !obj;
 }

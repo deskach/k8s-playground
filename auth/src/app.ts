@@ -10,12 +10,17 @@ import {errorHandler} from "./middlewares/error-handler";
 
 const app = express();
 
+app.set('trust proxy', true);
 app.use(json());
+app.use(cookieSession({
+    signed: false,
+    secure: true
+}))
+
 app.use(currentUserRouter);
 app.use(signInRouter);
 app.use(signOutRouter);
 app.use(signUpRouter);
-app.use(cookieSession({name: 'session', keys: ['jwt']}))
 
 app.all('*', async () => {
     throw new NotFoundError("url not found")

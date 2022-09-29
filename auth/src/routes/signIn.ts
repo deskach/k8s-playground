@@ -4,6 +4,7 @@ import {findUser} from "../helpers/user-helper";
 import {isEmpty} from "../util";
 import {BadRequestError} from "../errors/bad-request-errot";
 import {validateRequest} from "../middlewares/validate-request";
+import {PasswordHelper} from "../helpers/password-helper";
 
 const router = express.Router();
 
@@ -19,11 +20,13 @@ router.get("/api/users/signin",
     ],
     validateRequest,
     async (req: Request, res: Response) => {
-        const {email} = req.body
-        const user = await findUser(email)
+        const {email, password: suppliedPassword} = req.body
+        const user = await findUser(req)
 
         if (isEmpty(user)) {
             throw new BadRequestError(`Email ${email} not found`)
+        } else if (!await PasswordHelper.compare(user?.get('password'), suppliedPassword)) {
+            throw new BadRequestError('Invalid password')
         }
 
         res.status(200).send(user);

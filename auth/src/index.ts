@@ -12,8 +12,6 @@ const checkEnv = () => {
     if (isEmpty(JWT_KEY)) {
         throw new CustomError(`JWT_KEY env var "${JWT_KEY}" is invalid`);
     }
-
-    console.log(`JWT_KEY is "${JWT_KEY}"`);
 }
 
 const start = async () => {

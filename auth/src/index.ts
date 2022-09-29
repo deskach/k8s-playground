@@ -1,39 +1,19 @@
-import express from 'express';
 import 'express-async-errors';
-import {json} from 'body-parser';
-import cookieSession from 'cookie-session';
-import {currentUserRouter} from './routes/currentUser';
-import {signInRouter} from "./routes/signIn";
-import {signOutRouter} from "./routes/signout";
-import {signUpRouter} from "./routes/signup";
-import {errorHandler} from "./middlewares/error-handler";
-import {NotFoundError} from "./errors/not-found-error";
 import * as mongoose from "mongoose";
-import {DatabaseConnectionError} from "./errors/database-connection-error";
 import {isEmpty, noop} from "./util";
 import {CustomError} from "./errors/custom-error";
+import {app} from "./app";
 
 const PORT = 3000;
-const app = express();
-
-app.use(json());
-app.use(currentUserRouter);
-app.use(signInRouter);
-app.use(signOutRouter);
-app.use(signUpRouter);
-app.use(cookieSession({name: 'session', keys: ['jwt']}))
-
-app.all('*', async () => {
-    throw new NotFoundError("url not found")
-});
-app.use(errorHandler);
 
 const checkEnv = () => {
     const {JWT_KEY} = process.env
 
-    if (!JWT_KEY) {
-        throw new CustomError(`JWT_KEY env var ${JWT_KEY} is invalid`);
+    if (isEmpty(JWT_KEY)) {
+        throw new CustomError(`JWT_KEY env var "${JWT_KEY}" is invalid`);
     }
+
+    console.log(`JWT_KEY is "${JWT_KEY}"`);
 }
 
 const start = async () => {

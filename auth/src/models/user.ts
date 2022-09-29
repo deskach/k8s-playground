@@ -1,5 +1,5 @@
 import {HydratedDocument, model, Model, Schema} from "mongoose";
-import {PasswordService} from "../helpers/password-helper";
+import {PasswordHelper} from "../helpers/password-helper";
 
 interface UserAttrs {
     email: string;
@@ -33,7 +33,7 @@ const userSchema = new Schema<UserAttrs, UserModel>({
 })
 userSchema.pre('save', async function (done) {
     if (this.isModified('password')) {
-        this.password = await PasswordService.toHash(this.password);
+        this.password = await PasswordHelper.toHash(this.password);
     }
     done();
 })

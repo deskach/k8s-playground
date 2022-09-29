@@ -4,7 +4,7 @@ import {isEmpty} from "../util";
 
 const scryptAsync = promisify(scrypt);
 
-export class PasswordService {
+export class PasswordHelper {
     static async toHash(password: string, salt = ''): Promise<string> {
         salt = isEmpty(salt) ? randomBytes(8).toString('hex') : salt;
         const buf = await scryptAsync(password, salt, 64) as Buffer;

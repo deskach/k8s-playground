@@ -5,17 +5,18 @@ import {isEmpty} from "../util";
 import {BadRequestError} from "../errors/bad-request-errot";
 
 const addJWT2Req = (req: Request, user: UserDoc) => {
-    const userJWT = jwt.sign({
+    const jwtData = {
         id: user.id,
         email: user.email
-    }, process.env.JWT_KEY!);
+    }
+    const userJWT = jwt.sign(jwtData, process.env.JWT_KEY!);
 
     req.session = {jwt: userJWT};
 }
 
 export const findUser = async (req: Request) => {
     const {email} = req.body
-    const user = User.findOne({email});
+    const user = await User.findOne({email});
 
     if (!isEmpty(user)) {
         addJWT2Req(req, user as unknown as UserDoc);

@@ -3,7 +3,7 @@ import {body} from "express-validator";
 import {findUser} from "../helpers/user-helper";
 import {isEmpty} from "../util";
 import {BadRequestError} from "../errors/bad-request-errot";
-import {validateRequest} from "../middlewares/validate-request";
+import {validateRequestMw} from "../middlewares/validate-request-mw";
 import {PasswordHelper} from "../helpers/password-helper";
 
 const router = express.Router();
@@ -18,7 +18,7 @@ router.get("/api/users/signin",
             .notEmpty()
             .withMessage('Password is required'),
     ],
-    validateRequest,
+    validateRequestMw,
     async (req: Request, res: Response) => {
         const {email, password: suppliedPassword} = req.body
         const user = await findUser(req)

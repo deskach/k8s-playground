@@ -1,24 +1,21 @@
 import express, {Request, Response} from "express";
 import {isEmpty} from "../util";
 import jwt from "jsonwebtoken";
+import {currentUserMw} from "../middlewares/current-user-mw";
 
 const router = express.Router();
 
-router.get("/api/users/current-user", (req: Request, res: Response) => {
-    const EMPTY_USER = {currentUser: null};
-    const token = req?.session?.jwt;
+router.get("/api/users/current-user",
+    currentUserMw,
+    (req: Request, res: Response) => {
+        const currentUser = req.currentUser;
 
-    if (isEmpty(token)) {
-        return res.send(EMPTY_USER);
+        if (isEmpty(currentUser)) {
+            return res.send({currentUser: null});
+        }
+
+        return res.send(currentUser);
     }
-
-    try {
-        const payload = jwt.verify(token, process.env.JWT_KEY!);
-
-        return res.send(payload);
-    } catch (err: any) {
-        return res.send(EMPTY_USER);
-    }
-})
+)
 
 export {router as currentUserRouter};

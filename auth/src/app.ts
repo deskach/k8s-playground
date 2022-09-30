@@ -6,7 +6,7 @@ import {signOutRouter} from "./routes/signout";
 import {signUpRouter} from "./routes/signup";
 import cookieSession from "cookie-session";
 import {NotFoundError} from "./errors/not-found-error";
-import {errorHandler} from "./middlewares/error-handler";
+import {errorHandlerMw} from "./middlewares/error-handler-mw";
 
 const app = express();
 
@@ -25,6 +25,6 @@ app.use(signUpRouter);
 app.all('*', async () => {
     throw new NotFoundError("url not found")
 });
-app.use(errorHandler);
+app.use(errorHandlerMw);
 
 export {app}

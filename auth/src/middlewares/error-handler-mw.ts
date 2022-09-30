@@ -1,7 +1,7 @@
 import {Request, Response, NextFunction} from 'express';
 import {CustomErrorBase} from "../errors/custom-error-base";
 
-export const errorHandler = (
+export const errorHandlerMw = (
     err: Error,
     req: Request,
     res: Response,
@@ -13,5 +13,5 @@ export const errorHandler = (
     }
 
     return res.status(500)
-        .send({errors: [{message: "Something went wrong"}]})
+        .send({errors: [{message: err.message}]})
 };

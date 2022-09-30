@@ -1,12 +1,9 @@
 import express, {Request, Response} from "express";
 import {isEmpty} from "../util";
-import jwt from "jsonwebtoken";
-import {currentUserMw} from "../middlewares/current-user-mw";
 
 const router = express.Router();
 
 router.get("/api/users/current-user",
-    currentUserMw,
     (req: Request, res: Response) => {
         const currentUser = req.currentUser;
 

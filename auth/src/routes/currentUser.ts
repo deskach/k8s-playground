@@ -13,7 +13,7 @@ router.get("/api/users/current-user",
             return res.send({currentUser: null});
         }
 
-        return res.send(currentUser);
+        return res.send({currentUser});
     }
 )
 

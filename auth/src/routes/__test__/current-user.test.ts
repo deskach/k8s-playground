@@ -7,9 +7,10 @@ it('returns a 201 on successful signup', async () => {
         .post("/api/users/signup")
         .send(testUser)
         .expect(201);
+
     const res = await request(app)
         .get("/api/users/current-user")
-        .set('Cookie', authRes.get('Set-Cookie'))
+        .set('Cookie', await global.signin(testUser))
         .send()
         .expect(200);
 

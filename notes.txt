@@ -1,6 +1,9 @@
 # Stopped at:
     212
 
+# NextJS
+/pages - a specific directory used by framework to create routes
+
 # PODS
 kubectl get pods
 kubectl delete pod

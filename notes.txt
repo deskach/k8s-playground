@@ -2,7 +2,8 @@
     212
 
 # NextJS
-/pages - a specific directory used by framework to create routes
+/pages - is a specific directory used by framework to create routes
+- To fix auto-refresh of the app in web-browser kill client-depl-xyz pod
 
 # PODS
 kubectl get pods

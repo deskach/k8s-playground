@@ -31,7 +31,6 @@ export const createNewUser = async (req: Request) => {
 
     if (!isEmpty(existingUser)) {
         const msg = `Email "${email}" is in use`;
-        console.error(msg);
         throw new BadRequestError(msg);
     }
 

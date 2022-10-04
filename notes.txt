@@ -1,0 +1,40 @@
+# Stopped at:
+    212
+
+# PODS
+kubectl get pods
+kubectl delete pod
+kubectl logs [pod-name]
+
+# DEPLOYMENT
+kubectl get deployments
+kubectl apply -f [config.yaml]
+kubectl describe deployment [name]
+kubectl describe pod [name]
+kubectl delete deployment [name]
+kubectl rollout restart deployment [name]
+
+kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
+
+## [Ingress-Nginx](https://kubernetes.github.io/ingress-nginx/deploy/)
+minikube addons enable ingress
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
+kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+
+## MiniKube
+    minikube addons enable ingress
+    minikube ip
+        192.168.49.2:31481/posts
+
+## Notes
+- ErrImagePull, ErrImageNeverPull, or ImagePullBackOff
+^[lecture 69](https://www.udemy.com/course/microservices-with-node-js-and-react/learn/lecture/23494884#notes)
+- rollout;
+kubectl delete -f infra/k8s/
+kubectl apply -f infra/k8s/
+
+## check what is listening to port 80
+sudo lsof -i tcp:80
+
+# TOCHECK
+- groups of routes with express.Router

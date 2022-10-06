@@ -1,5 +1,6 @@
 import {useCallback, useState} from "react";
 import {useRequest} from "../../hooks/useRequest";
+import Router from "next/router";
 import {Errors} from "../../components/errors";
 
 const signUp = () => {
@@ -13,7 +14,12 @@ const signUp = () => {
     const handleOnSubmit = useCallback(async (e) => {
         e.preventDefault();
 
-        await doRequest();
+        const res = await doRequest();
+
+        if (res?.status < 300) { // on success redirect a user to the landing page
+            await Router.push('/');
+        }
+
     }, [email, password])
 
     return (

@@ -5,8 +5,10 @@ export const useRequest = ({url, method, body}) => {
     const [errors, setErrors] = useState([]);
 
     const doRequest = async () => {
+        let res = null;
+
         try {
-            const res = await axios.request({
+            res = await axios.request({
                 url,
                 method,
                 data: body
@@ -17,6 +19,8 @@ export const useRequest = ({url, method, body}) => {
             console.error(e.response.data?.errors)
             setErrors(e.response.data?.errors);
         }
+
+        return res;
     }
 
     return { doRequest, errors };

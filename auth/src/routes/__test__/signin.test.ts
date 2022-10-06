@@ -3,8 +3,8 @@ import {app} from '../../app';
 
 xit('it fails if email does not exist', async () => {
     // TODO: Fix me
-    return request(app)
-        .get("/api/users/signin")
+    await request(app)
+        .post("/api/users/signin")
         .send({
             email: 'test@test.com',
             password: 'password'
@@ -22,7 +22,7 @@ it('it succeeds with correct credentials', async () => {
         .expect(201);
 
     const res = await request(app)
-        .get("/api/users/signin")
+        .post("/api/users/signin")
         .send({
             email: 'test@test.com',
             password: 'password'

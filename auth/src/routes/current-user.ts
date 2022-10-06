@@ -1,11 +1,10 @@
 import express, {Request, Response} from "express";
 import {isEmpty} from "../util";
-// import {requireAuthMw} from "../middlewares/require-auth-mw";
+import {currentUserMw} from "../middlewares/current-user-mw";
 
 const router = express.Router();
 
-router.get("/api/users/current-user",
-    // requireAuthMw,
+router.get("/api/users/current-user", currentUserMw,
     (req: Request, res: Response) => {
         const currentUser = req.currentUser;
 

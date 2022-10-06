@@ -6,15 +6,15 @@ import {Errors} from "../../components/errors";
 const signUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { doRequest, errors } = useRequest({
-        url: "/api/users/signup",
-        method: 'POST',
-        body: {email, password}
-    })
+    const { doRequest, errors } = useRequest()
     const handleOnSubmit = useCallback(async (e) => {
         e.preventDefault();
 
-        const res = await doRequest();
+        const res = await doRequest(
+            "/api/users/signup",
+            'POST',
+            {email, password}
+        );
 
         if (res?.status < 300) { // on success redirect a user to the landing page
             await Router.push('/');

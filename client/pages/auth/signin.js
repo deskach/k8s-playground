@@ -1,14 +1,14 @@
-import {useCallback} from "react";
 import {useRequest} from "../../hooks/useRequest";
 import Router from "next/router";
 import {Errors} from "../../components/Errors";
 import {UserCredentialsForm} from "../../components/UserCredentialsForm";
+import {useCallback} from "react";
 
-const signUp = () => {
+const signIn = () => {
     const {doRequest, errors} = useRequest()
     const handleSubmit = useCallback(async function submitHandler(email, password) {
         const res = await doRequest(
-            "/api/users/signup",
+            "/api/users/signin",
             'POST',
             {email, password}
         );
@@ -21,9 +21,9 @@ const signUp = () => {
     return (
         <div className="container">
             <Errors errors={errors}/>
-            <h1>Sign up</h1>
-            <UserCredentialsForm onSubmit={handleSubmit} btnSubmitCaption="Sign Up"/>
+            <h1>Sign in</h1>
+            <UserCredentialsForm onSubmit={handleSubmit} btnSubmitCaption="Sign In"/>
         </div>)
 }
 
-export default signUp
+export default signIn

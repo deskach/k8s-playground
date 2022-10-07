@@ -1,5 +1,5 @@
 import {buildHttpClient} from "../core/api";
-import {CurrentUser} from "../components/currentUser";
+import {CurrentUser} from "../components/CurrentUser";
 
 const LandingPage = ({currentUser}) => {
     return (

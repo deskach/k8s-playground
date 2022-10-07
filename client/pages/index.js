@@ -1,10 +1,7 @@
-import axios from 'axios';
-import {API} from "../core/constants";
+import {buildHttpClient} from "../core/api";
 import {CurrentUser} from "../components/currentUser";
 
 const LandingPage = ({currentUser}) => {
-    console.debug("I am on the client, currentUser", currentUser)
-
     return (
         <>
             <CurrentUser email={currentUser?.email}/>
@@ -13,15 +10,9 @@ const LandingPage = ({currentUser}) => {
     )
 }
 
-LandingPage.getInitialProps = async ({ req }) => {
-    const url = `${API}current-user`;
+LandingPage.getInitialProps = async ({req}) => {
+    const res = await buildHttpClient(req?.headers).get("/users/current-user",);
 
-    const res = await axios.get(url, {
-        // headers: { Host: 'ticketing.com', }
-        headers: req?.headers
-    });
-
-    console.log("I am on the server", url, res?.data);
     return res?.data;
 }
 

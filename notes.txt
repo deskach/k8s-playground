@@ -24,11 +24,18 @@ kubectl create secret generic jwt-secret --from-literal=JWT_KEY=asdf
 minikube addons enable ingress
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.3.0/deploy/static/provider/cloud/deploy.yaml
 kubectl get service ingress-nginx-controller --namespace=ingress-nginx
+kubectl get namespace
+http://NAME_OF_SERVICE.NAMESPACE.svc.cluster.local
+    ^ this allows for cross-namespace service communication in k8s world
+    To alias such ^ complex urls one can create an ExternalNameService in k8s
 
 ## MiniKube
     minikube addons enable ingress
     minikube ip
         192.168.49.2:31481/posts
+
+#NextJS
+getInitialProps is executed client-side only upon navigation between the app's pages
 
 ## Notes
 - ErrImagePull, ErrImageNeverPull, or ImagePullBackOff

@@ -47,5 +47,13 @@ kubectl apply -f infra/k8s/
 ## check what is listening to port 80
 sudo lsof -i tcp:80
 
+# Tricks
+## - Conditional rendering
+    const links = [
+        {lablel: 'Sign Up', href: '/auth/signup', isVisible: !isSignedIn},
+        {lablel: 'Sign In', href: '/auth/signin', isVisible: !isSignedIn},
+        {lablel: 'Sign Out', href: '/auth/signout', isVisible: isSignedIn},
+    ].filter(l => l.isVisible)
+
 # TOCHECK
 - groups of routes with express.Router

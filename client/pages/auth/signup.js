@@ -8,7 +8,7 @@ const signUp = () => {
     const {doRequest, errors} = useRequest()
     const handleSubmit = useCallback(async function submitHandler(email, password) {
         const res = await doRequest(
-            "/api/users/signup",
+            "/users/signup",
             'POST',
             {email, password}
         );
@@ -19,7 +19,7 @@ const signUp = () => {
     }, [])
 
     return (
-        <div className="container">
+        <div>
             <Errors errors={errors}/>
             <h1>Sign up</h1>
             <UserCredentialsForm onSubmit={handleSubmit} btnSubmitCaption="Sign Up"/>

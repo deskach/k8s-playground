@@ -1,5 +1,5 @@
-import axios from 'axios';
 import {useState} from "react";
+import {buildHttpClient} from "../core/api";
 
 export const useRequest = (aData = null) => {
     const [errors, setErrors] = useState([]);
@@ -9,7 +9,7 @@ export const useRequest = (aData = null) => {
         let res = null;
 
         try {
-            res = await axios.request({
+            res = await buildHttpClient().request({
                 url,
                 method,
                 data: body ?? null

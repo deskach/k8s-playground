@@ -10,10 +10,10 @@ const LandingPage = ({currentUser}) => {
     )
 }
 
-LandingPage.getInitialProps = async ({req}) => {
-    const res = await buildHttpClient(req?.headers).get("/users/current-user",);
-
-    return res?.data;
-}
+// LandingPage.getInitialProps = async ({req}) => {
+//     const res = await buildHttpClient(req?.headers).get("/users/current-user",);
+//
+//     return res?.data;
+// }
 
 export default LandingPage

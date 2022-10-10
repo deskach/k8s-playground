@@ -1,8 +1,8 @@
 import {Request} from "express";
 import {User, UserDoc} from "../models/user";
 import jwt from "jsonwebtoken";
-import {isEmpty} from "../util";
-import {BadRequestError} from "../errors/bad-request-errot";
+import {isEmpty} from "@dkmicro/ticketing/build/util";
+import {BadRequestError} from "@dkmicro/ticketing/build/errors/bad-request-errot";
 
 const addJWT2Req = (req: Request, user: UserDoc) => {
     const jwtData = {

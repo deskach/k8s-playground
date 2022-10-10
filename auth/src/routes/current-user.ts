@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
-import {isEmpty} from "../util";
-import {currentUserMw} from "../middlewares/current-user-mw";
+import {isEmpty} from "@dkmicro/ticketing/build/util";
+import {currentUserMw} from "@dkmicro/ticketing/build/middlewares/current-user-mw";
 
 const router = express.Router();
 

@@ -1,6 +1,6 @@
 import {scrypt, randomBytes} from 'crypto';
 import {promisify} from 'util';
-import {isEmpty} from "../util";
+import {isEmpty} from "@dkmicro/ticketing/build/util";
 
 const scryptAsync = promisify(scrypt);
 

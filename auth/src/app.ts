@@ -5,8 +5,8 @@ import {signInRouter} from "./routes/signIn";
 import {signOutRouter} from "./routes/signout";
 import {signUpRouter} from "./routes/signup";
 import cookieSession from "cookie-session";
-import {NotFoundError} from "./errors/not-found-error";
-import {errorHandlerMw} from "./middlewares/error-handler-mw";
+import {NotFoundError} from "@dkmicro/ticketing/build/errors/not-found-error";
+import {errorHandlerMw} from "@dkmicro/ticketing/build/middlewares/error-handler-mw";
 
 const app = express();
 

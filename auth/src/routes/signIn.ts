@@ -1,9 +1,9 @@
 import express, {Request, Response} from "express";
 import {body} from "express-validator";
 import {findUser} from "../helpers/user-helper";
-import {isEmpty} from "../util";
-import {BadRequestError} from "../errors/bad-request-errot";
-import {validateRequestMw} from "../middlewares/validate-request-mw";
+import {isEmpty} from "@dkmicro/ticketing/build/util";
+import {BadRequestError} from "@dkmicro/ticketing/build/errors/bad-request-errot";
+import {validateRequestMw} from "@dkmicro/ticketing/build/middlewares/validate-request-mw";
 import {PasswordHelper} from "../helpers/password-helper";
 
 const router = express.Router();

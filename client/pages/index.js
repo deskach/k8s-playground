@@ -1,4 +1,4 @@
-import {buildHttpClient} from "../core/api";
+// import {buildHttpClient} from "../core/api";
 import {CurrentUser} from "../components/CurrentUser";
 
 const LandingPage = ({currentUser}) => {

@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express";
 import {body} from "express-validator";
 import {createNewUser} from "../helpers/user-helper";
-import {validateRequestMw} from "../middlewares/validate-request-mw";
+import {validateRequestMw} from "@dkmicro/ticketing/build/middlewares/validate-request-mw";
 
 const router = express.Router();
 

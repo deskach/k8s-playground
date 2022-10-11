@@ -1,7 +1,7 @@
 import {isEmpty} from "./string";
 import {CustomError} from "../errors/custom-error";
 
-const checkEnv = () => {
+export const checkEnv = () => {
     const {JWT_KEY, MONGO_URI} = process.env;
 
     [JWT_KEY, MONGO_URI].forEach(envVar => {

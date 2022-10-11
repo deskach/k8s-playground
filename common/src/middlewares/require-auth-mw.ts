@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
-import {isEmpty} from "../util";
 import {CustomError} from "../errors/custom-error";
+import {isEmpty} from "../util/string";
 
 // This should be always preceded by currentUserMw
 export const requireAuthMw = (

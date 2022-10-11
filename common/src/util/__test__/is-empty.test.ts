@@ -1,4 +1,4 @@
-import {isEmpty} from "../index";
+import {isEmpty} from "../string";
 
 it('should process empty string correctly', async () => {
     expect(isEmpty('')).toBeTruthy();

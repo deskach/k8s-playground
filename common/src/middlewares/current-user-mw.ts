@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from "express";
-import {isEmpty} from "../util";
 import jwt from "jsonwebtoken";
+import {isEmpty} from "../util/string";
 
 interface UserPayload {
     id: string;

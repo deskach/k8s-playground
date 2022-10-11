@@ -1,8 +1,7 @@
 import 'express-async-errors';
 import * as mongoose from "mongoose";
 import {app} from "./app";
-import {noop} from "@dkmicro/ticketing/build/util";
-import {checkEnv} from '@dkmicro/ticketing'
+import {checkEnv, noop} from '@dkmicro/ticketing'
 
 const PORT = 3000;
 

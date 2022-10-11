@@ -1,21 +1,12 @@
 import 'express-async-errors';
 import * as mongoose from "mongoose";
 import {app} from "./app";
-import {isEmpty, noop} from "@dkmicro/ticketing/build/util";
-import {CustomError} from "@dkmicro/ticketing";
+import {checkEnv, noop} from "@dkmicro/ticketing";
 
 const PORT = 3000;
 
-const checkEnv = () => {
-    const {JWT_KEY} = process.env
-
-    if (isEmpty(JWT_KEY)) {
-        throw new CustomError(`JWT_KEY env var "${JWT_KEY}" is invalid`);
-    }
-}
-
 const start = async () => {
-    const connStr = "mongodb://auth-mongo-srv:27017/auth";
+    const connStr = process.env.MONGO_URI as string;
 
     try {
         checkEnv();

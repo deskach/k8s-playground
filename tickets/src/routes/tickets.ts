@@ -8,4 +8,8 @@ router.get(routeStr, requireAuthMw, async (req: Request, res: Response) => {
     res.status(200).send("Implement me");
 })
 
+router.post(routeStr, requireAuthMw, async (req: Request, res: Response) => {
+    res.status(200).send("Implement me");
+})
+
 export {router as ticketsRouter}

@@ -3,6 +3,7 @@ import {json} from "body-parser";
 import cookieSession from "cookie-session";
 import {NotFoundError} from "@dkmicro/ticketing/build/errors/not-found-error";
 import {errorHandlerMw} from "@dkmicro/ticketing/build/middlewares/error-handler-mw";
+import {ticketsRouter} from "./routes/tickets";
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use(cookieSession({
     sameSite: "strict",
 }))
 
-// app.use(route); // routes go here
+app.use(ticketsRouter);
 
 app.all('*', async () => {
     throw new NotFoundError("url not found")

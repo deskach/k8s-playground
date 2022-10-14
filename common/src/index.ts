@@ -13,3 +13,4 @@ export * from './middlewares/validate-request-mw';
 export * from './util';
 
 export * from './helpers/validation-helper'
+export {extractCurrentUserFromSession} from "./helpers/session-helper";

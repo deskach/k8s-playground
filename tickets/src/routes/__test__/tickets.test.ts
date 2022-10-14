@@ -16,6 +16,22 @@ it('requires user to be signed id', async () => {
         .expect(401);
 })
 
+it('does not return 401 if the user is signed in', async () => {
+    await request(app)
+        .post("/api/users/signup")
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(201);
+
+    const res = await request(app)
+        .post("/api/tickets")
+        .send({})
+
+    expect(res.statusCode).not.toEqual(401);
+})
+
 it('creates a ticket', () => {
 
 })

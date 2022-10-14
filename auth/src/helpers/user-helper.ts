@@ -1,15 +1,11 @@
 import {Request} from "express";
 import {User, UserDoc} from "../models/user";
-import jwt from "jsonwebtoken";
 import {isEmpty} from "@dkmicro/ticketing/build/util";
 import {BadRequestError} from "@dkmicro/ticketing";
 
 const addJWT2Req = (req: Request, user: UserDoc) => {
-    const jwtData = {
-        id: user.id,
-        email: user.email
-    }
-    const userJWT = jwt.sign(jwtData, process.env.JWT_KEY!);
+    const jwtData = {id: user.id, email: user.email};
+    const userJWT = createJWT(jwtData, process.env.JWT_KEY!);
 
     req.session = {jwt: userJWT};
 }

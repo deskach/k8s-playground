@@ -5,6 +5,7 @@ const router = express.Router();
 const routeStr = "/api/tickets";
 
 router.get(routeStr, requireAuthMw, async (req: Request, res: Response) => {
+    console.log(req.currentUser);
     res.status(200).send("Implement me");
 })
 

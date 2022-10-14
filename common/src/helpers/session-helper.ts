@@ -7,6 +7,16 @@ export interface UserPayload {
     email: string;
 }
 
+export interface JWTData {
+    id: string;
+    email: string;
+}
+
+export const createJWT = (data: JWTData, secret: string) => {
+    return jwt.sign(data, secret);
+}
+
+
 export const extractCurrentUserFromSession = (req: Request): UserPayload | undefined => {
     const token = req?.session?.jwt;
 

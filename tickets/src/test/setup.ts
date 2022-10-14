@@ -1,8 +1,5 @@
-import request from 'supertest';
-
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
-import { app } from '../app';
 
 declare global {
     var signin: (creds: Record<string, string>) => Promise<string[]>;
@@ -34,10 +31,5 @@ afterAll(async () => {
 });
 
 global.signin = async ({email = 'test@test.com', password = 'secret'}) => {
-    const response = await request(app)
-        .get("/api/users/signin")
-        .send({ email, password })
-        .expect(200);
-
-    return response.get('Set-Cookie');
+    return jwt.sign()
 };

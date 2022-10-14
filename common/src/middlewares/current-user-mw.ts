@@ -1,5 +1,13 @@
 import {NextFunction, Request, Response} from "express";
-import {extractCurrentUserFromSession} from "../helpers/session-helper";
+import {extractCurrentUserFromSession, UserPayload} from "../helpers/session-helper";
+
+declare global {
+    namespace Express {
+        interface Request {
+            currentUser?: UserPayload;
+        }
+    }
+}
 
 export const currentUserMw = (
     req: Request,

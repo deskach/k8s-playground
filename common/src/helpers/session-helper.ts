@@ -2,17 +2,9 @@ import {Request} from "express";
 import {isEmpty} from "../util";
 import jwt from "jsonwebtoken";
 
-interface UserPayload {
+export interface UserPayload {
     id: string;
     email: string;
-}
-
-declare global {
-    namespace Express {
-        interface Request {
-            currentUser?: UserPayload;
-        }
-    }
 }
 
 export const extractCurrentUserFromSession = (req: Request): UserPayload | undefined => {

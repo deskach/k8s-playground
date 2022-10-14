@@ -1,5 +1,5 @@
 import express, {Request, Response} from "express";
-import {currentUserMw, requireAuthMw} from "@dkmicro/ticketing";
+import {requireAuthMw} from "@dkmicro/ticketing";
 
 const router = express.Router();
 const routeStr = "/api/tickets";

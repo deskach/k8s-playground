@@ -1,5 +1,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import { createJWT } from '@dkmicro/ticketing/build/helpers/session-helper';
 import mongoose from 'mongoose';
+import {randomBytes} from "crypto";
 
 declare global {
     var signin: (creds: Record<string, string>) => Promise<string[]>;
@@ -31,5 +33,7 @@ afterAll(async () => {
 });
 
 global.signin = async ({email = 'test@test.com', password = 'secret'}) => {
-    return jwt.sign()
+    const fakeId = randomBytes(8).toString('hex');
+
+    return createJWT({id: fakeId, email})
 };

@@ -17,19 +17,13 @@ it('requires user to be signed id', async () => {
 })
 
 it('does not return 401 if the user is signed in', async () => {
+    const cookies = global.signIn();
+
     await request(app)
-        .post("/api/users/signup")
-        .send({
-            email: 'test@test.com',
-            password: 'password'
-        })
-        .expect(201);
-
-    const res = await request(app)
         .post("/api/tickets")
+        .set('Cookie', cookies) // array is needed to meet supertest's requirements
         .send({})
-
-    expect(res.statusCode).not.toEqual(401);
+        .expect(200);
 })
 
 it('creates a ticket', () => {

@@ -1,20 +1,24 @@
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import { createJWT } from '@dkmicro/ticketing/build/helpers/session-helper';
+import {MongoMemoryServer} from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import {randomBytes} from "crypto";
+import {createJWT, JWTData} from "@dkmicro/ticketing";
+
+type SignInFunc = (data?: Partial<JWTData>, secret?: string) => string[];
 
 declare global {
-    var signin: (creds: Record<string, string>) => Promise<string[]>;
+    var signIn: SignInFunc;
 }
 
 let mongo: any;
 
 beforeAll(async () => {
-    process.env.JWT_KEY = 'asdf';
     mongo = await MongoMemoryServer.create();
     const mongoUri = mongo.getUri();
 
     await mongoose.connect(mongoUri, {})
+
+    process.env.JWT_KEY = 'asdf';
+    process.env.MONGO_URI = mongoUri;
 })
 
 beforeEach(async () => {
@@ -32,8 +36,18 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
-global.signin = async ({email = 'test@test.com', password = 'secret'}) => {
-    const fakeId = randomBytes(8).toString('hex');
+const getFakeId = (): string => randomBytes(8).toString('hex');
+const defaultJWTData: JWTData = {email: 'test@test.com', id: getFakeId()}
 
-    return createJWT({id: fakeId, email})
+global.signIn = (
+    data = defaultJWTData,
+    secret = process.env.JWT_KEY!
+) => {
+    const {id, email} = {...defaultJWTData, ...data};
+    const jwtPayload = createJWT({id, email}, secret);
+    const sessionEntry = {jwt: jwtPayload};
+    const sessionStr =  JSON.stringify(sessionEntry);
+    const cookie = Buffer.from(sessionStr).toString('base64');
+
+    return [`session=${cookie}`]
 };

@@ -14,5 +14,7 @@ export const requireAuthMw = (
         throw new CustomError("Not authorised", 401);
     }
 
+    req.currentUser = currentUser
+
     next();
 }

@@ -1,7 +1,7 @@
 import {Request} from "express";
 import {User, UserDoc} from "../models/user";
 import {isEmpty} from "@dkmicro/ticketing/build/util";
-import {BadRequestError} from "@dkmicro/ticketing";
+import {BadRequestError, createJWT} from "@dkmicro/ticketing";
 
 const addJWT2Req = (req: Request, user: UserDoc) => {
     const jwtData = {id: user.id, email: user.email};
@@ -30,7 +30,7 @@ export const createNewUser = async (req: Request) => {
         throw new BadRequestError(msg);
     }
 
-    const user = await User.build({email, password});
+    const user = User.build({email, password});
 
     await user.save();
     addJWT2Req(req, user);

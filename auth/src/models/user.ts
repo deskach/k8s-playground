@@ -9,7 +9,7 @@ interface UserAttrs {
 export type UserDoc = HydratedDocument<UserAttrs>;
 
 interface UserModel extends Model<UserAttrs> {
-    build(attrs: UserAttrs): Promise<UserDoc>;
+    build(attrs: UserAttrs): UserDoc;
 }
 
 const userSchema = new Schema<UserAttrs, UserModel>({
@@ -38,7 +38,7 @@ userSchema.pre('save', async function (done) {
     done();
 })
 userSchema.static('build', (attrs) => {
-    return User.create(attrs);
+    return new User(attrs);
 })
 
 export const User = model<UserAttrs, UserModel>('User', userSchema);

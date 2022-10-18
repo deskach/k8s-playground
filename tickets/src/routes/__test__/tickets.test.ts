@@ -20,11 +20,12 @@ it('requires user to be signed id', async () => {
 it('does not return 401 if the user is signed in', async () => {
     const cookies = global.signIn();
 
-    await request(app)
+    const status = await request(app)
         .post("/api/tickets")
         .set('Cookie', cookies) // array is needed to meet supertest's requirements
-        .send({})
-        .expect(200);
+        .send({});
+
+    expect(status).not.toEqual(401);
 })
 
 it('returns an error if invalid title is provided', async () => {
@@ -48,11 +49,11 @@ it('returns an error if invalid price is provided', async () => {
 })
 
 it('creates a ticket', async () => {
-    const data = {title: "chest", price: 33};
+    const data = {title: "How scrawny. You endure like a lagoon.", price: 33};
     await request(app)
         .post("/api/tickets")
         .set('Cookie', global.signIn()) // array is needed to meet supertest's requirements
-        .send({title: "chest", price: 33})
+        .send(data)
         .expect(201);
 
     const createdTicket = await Ticket.findOne(data);

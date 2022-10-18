@@ -12,17 +12,13 @@ router.get(routeStr, requireAuthMw, async (req: Request, res: Response) => {
 })
 
 router.post(routeStr, requireAuthMw, [
-    body('title')
-        .isAlphanumeric()
-        .withMessage('A valid title is required'),
-    body('price')
-        .isFloat({gt: 0})
-        .withMessage('A positive price is required')
+    body('title').not().isEmpty().withMessage('A valid title is required'),
+    body('price').isFloat({gt: 0}).withMessage('A positive price is required')
 ], validateRequestMw, async (req: Request, res: Response) => {
-    console.debug(req.currentUser);
-    const ticket = await Ticket.build({...req.body, userId: req?.currentUser?.id})
+    console.debug("Current user:", req.currentUser);
+    const ticket = await Ticket.create({...req.body, userId: req?.currentUser?.id})
 
-    console.debug("A new ticket was created", JSON.stringify(ticket));
+    console.debug("A new ticket created:", JSON.stringify(ticket));
 
     res.status(201).send(ticket);
 })

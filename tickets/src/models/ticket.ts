@@ -4,17 +4,17 @@ interface TicketAttrs {
     title: string;
     price: number;
     userId?: string;
-    id?: string;
 }
 
 interface TicketDocAttrs extends TicketAttrs {
     createdAt?: string;
+    id?: string;
 }
 
 export type TicketDoc = HydratedDocument<TicketDocAttrs>;
 
 interface TicketModel extends Model<TicketDocAttrs> {
-    build(attrs: TicketAttrs): Promise<TicketDoc>;
+    build(attrs: TicketAttrs): TicketDoc;
 }
 
 const ticketSchema = new Schema<TicketDocAttrs, TicketModel>({
@@ -50,7 +50,7 @@ ticketSchema.pre('save', async function (done) {
     done();
 })
 ticketSchema.static('build', (attrs) => {
-    return Ticket.create(attrs);
+    return new Ticket(attrs);
 })
 
 export const Ticket = model<TicketAttrs, TicketModel>('Ticket', ticketSchema);

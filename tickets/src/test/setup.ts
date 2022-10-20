@@ -36,7 +36,7 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
-const getFakeId = (): string => randomBytes(8).toString('hex');
+const getFakeId = (): string => new mongoose.Types.ObjectId().toHexString();
 const defaultJWTData: JWTData = {email: 'test@test.com', id: getFakeId()}
 
 global.signIn = (

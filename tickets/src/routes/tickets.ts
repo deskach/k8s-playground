@@ -5,9 +5,15 @@ import {Ticket} from "../models/ticket";
 // import {NotFoundError} from "@dkmicro/ticketing/build/errors/not-found-error";
 
 const router = express.Router();
-const routeStr = "/api/tickets";
+const apiTicketsUrl = "/api/tickets";
 
-router.get(`${routeStr}/:id`, requireAuthMw, async (req: Request, res: Response) => {
+const fieldConstraintsMw = [
+    body('title').not().isEmpty().withMessage('A valid title is required'),
+    body('price').isFloat({gt: 0}).withMessage('A positive price is required')
+]
+
+// Retrieves a ticket by id
+router.get(`${apiTicketsUrl}/:id`, requireAuthMw, async (req: Request, res: Response) => {
     const ticket = await Ticket.findById(req.params.id)
 
     if (isEmpty(ticket)) {
@@ -18,14 +24,30 @@ router.get(`${routeStr}/:id`, requireAuthMw, async (req: Request, res: Response)
     res.status(200).send(ticket);
 })
 
-router.get(routeStr, requireAuthMw, async (req: Request, res: Response) => {
-    res.status(200).send("Implement me");
+// update a ticket by id
+router.put(`${apiTicketsUrl}/:id`, requireAuthMw, fieldConstraintsMw, async (req: Request, res: Response) => {
+    const ticket = await Ticket.findById(req.params.id)
+
+    if (isEmpty(ticket)) {
+        return res.status(404).send();
+    } else if (ticket?.userId != req?.currentUser?.id) {
+        return res.status(401).send();
+    }
+
+    ticket!.set(req.body)
+    await ticket!.save();
+
+    res.status(200).send(ticket);
 })
 
-router.post(routeStr, requireAuthMw, [
-    body('title').not().isEmpty().withMessage('A valid title is required'),
-    body('price').isFloat({gt: 0}).withMessage('A positive price is required')
-], validateRequestMw, async (req: Request, res: Response) => {
+// Retrieves all tickets
+router.get(apiTicketsUrl, requireAuthMw, async (req: Request, res: Response) => {
+    const tickets = await Ticket.find({});
+
+    res.status(200).send(tickets);
+})
+
+router.post(apiTicketsUrl, requireAuthMw, fieldConstraintsMw, validateRequestMw, async (req: Request, res: Response) => {
     const ticket = await Ticket.create({...req.body, userId: req?.currentUser?.id})
 
     res.status(201).send(ticket);

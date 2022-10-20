@@ -12,6 +12,8 @@ export const errorHandlerMw = (
             .send({errors: err.serializeErrors()});
     }
 
+    console.error(err);
+
     return res.status(500)
         .send({errors: [{message: err.message}]})
 };

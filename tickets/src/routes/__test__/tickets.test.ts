@@ -1,7 +1,7 @@
 import request from 'supertest';
 import {app} from "../../app";
 import {Ticket} from "../../models/ticket";
-import {randomBytes} from "crypto";
+import mongoose from "mongoose";
 
 describe('HTTP[POST]: /api/tickets', () => {
     it('has /api/tickets route for post requests', async () => {
@@ -68,7 +68,8 @@ describe('HTTP[POST]: /api/tickets', () => {
 
 describe('HTTP[GET]: /api/tickets/id', () => {
     it('GET /api/tickets/:id returns 404 if the ticket is not found', async () => {
-        const fakeId = randomBytes(12).toString('hex');
+        // const fakeId = randomBytes(12).toString('hex');
+        const fakeId = new mongoose.Types.ObjectId().toHexString();
         const res = await request(app)
             .get(`/api/tickets/${fakeId}`)
             .set('Cookie', global.signIn()) // array is needed to meet supertest's requirements

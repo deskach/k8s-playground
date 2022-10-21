@@ -56,4 +56,9 @@ sudo lsof -i tcp:80
     ].filter(l => l.isVisible)
 
 # TOCHECK
-- groups of routes with express.Router
+- groups of routes with express.Router ?!
+
+# NATS (nats-streaming)
+    - https://hub.docker.com/_/nats-streaming
+    - https://docs.nats.io/running-a-nats-service/introduction/installation
+    npm -> node-nats-streaming
